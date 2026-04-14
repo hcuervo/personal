@@ -116,7 +116,8 @@ li::before {
   transition: opacity var(--transition-fade);
   background: var(--color-bg);
   z-index: 1;
-  padding-top: 80px; /* Offset for the fixed header */
+  padding-top: 100px; /* Increased offset for the fixed header */
+  padding-bottom: 40px;
   text-align: left;
 }
 
@@ -144,7 +145,7 @@ li::before {
     min-height: 100vh;
     opacity: 1;
     pointer-events: auto;
-    padding: var(--space-lg) 0;
+    padding: var(--space-xl) 0 var(--space-lg); /* More space on top for mobile too */
   }
 }
 

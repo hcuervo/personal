@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 150);
 
         currentIndex = index;
+        updateHeaderState();
 
         setTimeout(() => {
             isTransitioning = false;
@@ -72,17 +73,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. KEYBOARD HANDLER
     function handleKey(e) {
-        if (window.innerWidth <= 768) return;
+        if (window.innerWidth <= 768) {
+            // Revert to default keys on mobile? No, user wants snap.
+        }
 
         switch(e.key) {
             case 'ArrowDown':
             case 'PageDown':
+                e.preventDefault();
                 goToSection(currentIndex + 1);
                 break;
             case 'ArrowUp':
             case 'PageUp':
+                e.preventDefault();
                 goToSection(currentIndex - 1);
                 break;
+            case ' ':
+                e.preventDefault();
+                goToSection(e.shiftKey ? currentIndex - 1 : currentIndex + 1);
+                break;
+        }
+    }
+
+    // 3b. TOUCH HANDLER (Mobile Snap)
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    function handleTouchStart(e) {
+        touchStartY = e.changedTouches[0].screenY;
+    }
+
+    function handleTouchEnd(e) {
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    }
+
+    function handleSwipe() {
+        const threshold = 50;
+        if (touchEndY < touchStartY - threshold) {
+            // Swipe Down -> Next
+            goToSection(currentIndex + 1);
+        } else if (touchEndY > touchStartY + threshold) {
+            // Swipe Up -> Prev
+            goToSection(currentIndex - 1);
         }
     }
 
@@ -97,10 +130,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. CTA / SMOOTH SCROLL HANDLER
     navCta.forEach(link => {
         link.addEventListener('click', (e) => {
-            const targetId = link.getAttribute('href').substring(1);
+            const href = link.getAttribute('href');
+            if (!href || !href.startsWith('#')) return;
+            
+            const targetId = href.substring(1);
             const targetIndex = Array.from(sections).findIndex(s => s.id === targetId);
             
-            if (targetIndex !== -1 && window.innerWidth > 768) {
+            if (targetIndex !== -1) {
                 e.preventDefault();
                 goToSection(targetIndex);
             }
@@ -108,26 +144,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 6. INITIALIZATION & REVEALS
-    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('wheel', handleWheel, { passive: false }); // Needs active to prevent default if needed
     window.addEventListener('keydown', handleKey);
+    
+    // Mobile Touch Events
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
 
-    // Initial reveal for the first section
-    const initialReveals = sections[0].querySelectorAll('.reveal');
-    initialReveals.forEach(r => r.classList.add('visible'));
+    // Ensure first section is visible
+    setTimeout(() => {
+        const initialReveals = sections[0].querySelectorAll('.reveal');
+        initialReveals.forEach(r => r.classList.add('visible'));
+    }, 500);
 
-    // 7. HEADER OPACITY ON SCROLL (MOBILE ONLY)
-    window.addEventListener('scroll', () => {
-        if (window.innerWidth <= 768) {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 50) {
-                header.style.opacity = '0.8';
-                header.style.background = 'rgba(255,255,255,0.9)';
-            } else {
-                header.style.opacity = '1';
-                header.style.background = 'transparent';
-            }
+    // 7. HEADER OPACITY ON SCROLL
+    // On the snap model, we track currentIndex
+    const header = document.querySelector('.header');
+    
+    function updateHeaderState() {
+        if (currentIndex > 0) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
         }
-    });
+    }
 
     // 8. FORM SUBMISSION MOCK
     const form = document.querySelector('#lead-form');

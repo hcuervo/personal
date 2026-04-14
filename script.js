@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navCta = document.querySelectorAll('.nav-cta, .cta, .nav-brand');
     let currentIndex = 0;
     let isTransitioning = false;
-    const transitionDuration = 700; // slightly longer than CSS to avoid ghost scrolls
+    const transitionDuration = 900; // Increased for a more deliberate, calm feel
 
     // 1. NAVIGATION CONTROL (DESKTOP)
     function goToSection(index) {
@@ -30,13 +30,23 @@ document.addEventListener('DOMContentLoaded', () => {
         reveals.forEach(r => r.classList.remove('visible'));
         setTimeout(() => {
             reveals.forEach(r => r.classList.add('visible'));
-        }, 100);
+        }, 150);
 
         currentIndex = index;
 
         setTimeout(() => {
             isTransitioning = false;
         }, transitionDuration);
+    }
+
+    // Header interaction based on scroll (Mobile and transitions)
+    function updateHeader() {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 50 || currentIndex > 0) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
     }
 
     // 2. SCROLL / WHEEL HANDLER (DESKTOP)
@@ -53,8 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (e.deltaY > 50) {
             goToSection(currentIndex + 1);
+            updateHeader();
         } else if (e.deltaY < -50) {
             goToSection(currentIndex - 1);
+            updateHeader();
         }
     }
 

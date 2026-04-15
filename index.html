@@ -824,6 +824,7 @@
 
 <body>
 
+<<<<<<< HEAD
     <!-- NAV -->
     <nav id="main-nav">
         <a href="#hero" class="nav-name">Horacio Cuervo</a>
@@ -854,6 +855,125 @@
                 style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">
                 <span class="hero-photo-initials">HC</span>
             </div>
+=======
+  <!-- SECTION DOTS (Desktop Only) -->
+  <nav class="section-nav" aria-hidden="true">
+    <div class="dot active" data-index="0" title="Inicio">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    </div>
+    <div class="dot" data-index="1"></div>
+    <div class="dot" data-index="2"></div>
+    <div class="dot" data-index="3"></div>
+    <div class="dot" data-index="4"></div>
+    <div class="dot" data-index="5"></div>
+  </nav>
+
+  <main id="main-content">
+    <!-- SECTION 1: HERO -->
+    <section id="hero" class="section section-full">
+      <div class="container hero-container">
+        <div class="content-block reveal">
+          <h1 class="hero-headline">El negocio avanza.<br>Las decisiones, no tanto.</h1>
+          <p class="hero-sub">Si todo avanza en la agenda pero nada cierra, el problema es de dirección.</p>
+          <a href="#contacto" class="cta">Coordinar una conversación</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: EL PROBLEMA -->
+    <section id="problema" class="section section-full">
+      <div class="container center-vertical">
+        <div class="content-block reveal">
+          <h2 class="section-title">El problema</h2>
+          <p>El negocio crece.<br>Pero se vuelve más difícil de entender.</p>
+          <p>Aparecen más iniciativas.<br>Más reuniones.<br>Más decisiones urgentes.</p>
+          <p>Y, sin darte cuenta, empezás a perder algo básico: <strong>claridad</strong>.</p>
+          <p>Se sigue haciendo mucho. Pero no siempre lo importante.<br>Se decide todo. Pero no siempre bien.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: QUÉ HAGO -->
+    <section id="que-hago" class="section section-full">
+      <div class="container center-vertical">
+        <div class="content-block reveal">
+          <h2 class="section-title">Qué hago</h2>
+          <p>No trabajo con recetas.</p>
+          <p>Trabajo sobre decisiones que hoy se están tomando sin claridad.</p>
+          <p>Ordeno prioridades, corto lo que sobra y marco dónde hay movimiento sin avance.</p>
+          <p>No sumo capas. Elimino ruido.</p>
+          <p>No son conversaciones para analizar. Son para decidir.</p>
+          <p>Bajo el problema a lo concreto, separo lo importante y pongo en palabras lo que no se está diciendo.</p>
+          <p>Cuando cambia cómo decidís, cambia el negocio.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: CUÁNDO APARECE -->
+    <section id="cuando" class="section section-full">
+      <div class="container center-vertical">
+        <div class="content-block reveal">
+          <h2 class="section-title">Cuándo se dá esta conversación</h2>
+          <div class="ritmo-lectura">
+            <ul class="accent-list">
+              <li>Cuando el negocio funciona, pero no sabés qué lo está sosteniendo.</li>
+              <li>Cuando todo está abierto y nada termina de avanzar.</li>
+              <li>Cuando la agenda se llena y las decisiones se postergan.</li>
+              <li>Cuando la tecnología marca el ritmo y el negocio pierde dirección.</li>
+              <li>Cuando el dueño está en todo, pero cada vez decide menos.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BACKGROUND SECTION -->
+    <section id="background" class="section section-full">
+      <div class="container">
+        <div class="background-grid">
+          <div class="portrait-main reveal">
+            <img src="img/hcuervo-selfie-cenital.png" alt="Horacio Cuervo" onerror="this.src='https://placehold.co/600x800/0B0F14/E8E3DA?text=H+Cuervo'">
+          </div>
+          <div class="background-identity-editorial reveal">
+            <h2 class="section-title">Contexto</h2>
+            <div class="identity-name">Horacio Cuervo</div>
+            <p class="identity-bio">30 años trabajando con personas que no podían equivocarse.</p>
+            <p class="identity-bio">IBM. Grandes empresas. Startups.</p>
+            <p class="identity-bio">Ese recorrido forma criterio. Y el criterio es lo que ordena cuando el negocio se complejiza.</p>
+          </div>
+        </div>
+        <div class="contexto-footer reveal">
+          <p>No todo problema necesita más trabajo.<br>Muchos necesitan menos ruido.</p>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- SECTION 8: FORMULARIO -->
+    <section id="contacto" class="section section-full section-form">
+      <div class="container center-vertical">
+        <div class="form-wrapper reveal">
+          <h2 class="form-headline">Coordinemos una conversación.</h2>
+          <form id="lead-form" class="pure-form" action="#" method="POST">
+            <div class="form-row">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-row">
+              <label for="empresa">Empresa y rol</label>
+              <input type="text" id="empresa" name="empresa" required>
+            </div>
+            <div class="form-row">
+              <label for="mensaje">¿CUÁL ES SU MAYOR PREOCUPACIÓN?</label>
+              <textarea id="mensaje" name="mensaje" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Iniciar conversación</button>
+          </form>
+          <div id="form-success" class="success-msg" style="display: none;">
+            <p>Gracias. Te contacto en las próximas 48 horas.</p>
+          </div>
+>>>>>>> f0c306b233307766417281085852aec7809f3995
         </div>
     </section>
 
@@ -1126,5 +1246,9 @@
         });
     </script>
 </body>
+<<<<<<< HEAD
 
 </html>
+=======
+</html>
+>>>>>>> f0c306b233307766417281085852aec7809f3995

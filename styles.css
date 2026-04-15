@@ -29,14 +29,14 @@
   --space-xl: 12rem;
 
   --max-width: 860px; /* Slightly narrower for better focus */
-  --transition-fade: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fade: 0.1s cubic-bezier(0.4, 0, 0.2, 1); /* Ultra fast as requested */
 }
 
 html {
-  font-size: 15px; /* Base scale down for smaller typography */
+  font-size: 15px;
   -webkit-font-smoothing: antialiased;
   background-color: var(--color-bg);
-  overflow: hidden;
+  scroll-behavior: smooth;
 }
 
 @media (max-width: 768px) {
@@ -50,9 +50,9 @@ body {
   font-family: var(--font-sans);
   color: var(--color-text);
   background-color: var(--color-bg);
-  line-height: 1.8; /* Increased breathing room */
+  line-height: 1.8;
   font-weight: 300;
-  overflow: hidden;
+  overflow-x: hidden;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -82,10 +82,7 @@ li {
 }
 
 li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  color: var(--color-accent);
+  content: none;
 }
 
 @media (max-width: 768px) {
@@ -103,28 +100,22 @@ li::before {
 }
 
 .section-full {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative; 
   display: flex;
   align-items: center;
-  justify-content: center; /* Center horizontally in the section */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition-fade);
+  justify-content: flex-start;
   background: var(--color-bg);
   z-index: 1;
-  padding-top: 100px; /* Increased offset for the fixed header */
-  padding-bottom: 40px;
+  padding-top: 100px;
+  padding-bottom: 60px;
   text-align: left;
 }
 
-.section-full.active {
+/* Sections are now visible by default in flow */
+.section-full {
   opacity: 1;
-  pointer-events: auto;
-  z-index: 2;
 }
 
 /* Subtle background variations */
@@ -239,8 +230,8 @@ li::before {
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  align-items: center; /* Ensures dots and house are centered on the same axis */
-  gap: 1.4rem;
+  align-items: center;
+  gap: 1.2rem;
   z-index: 1000;
 }
 
@@ -380,9 +371,24 @@ strong {
   opacity: 0.7;
 }
 
-/* Specific adjustments for Section 4 */
-#como-trabajo .container {
-  display: flex; /* Ensure same flex behavior */
+.merged-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: start;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .merged-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.small-image {
+  max-width: 280px;
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 1024px) {
@@ -460,7 +466,38 @@ strong {
   text-transform: uppercase;
 }
 
+.background-list li {
+  padding-left: 0;
+}
+
+.background-list li::before {
+  content: none;
+}
+
+.contexto-footer {
+  width: 100%;
+  margin-top: 6rem;
+  text-align: center;
+  border-top: 1px solid rgba(232, 227, 218, 0.05);
+  padding-top: 4rem;
+}
+
+.contexto-footer p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 3vw, 2.1rem);
+  font-style: italic;
+  color: var(--color-text);
+  line-height: 1.4;
+  margin: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 @media (max-width: 768px) {
+  .contexto-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+  }
   .background-grid {
     grid-template-columns: 1fr;
     text-align: left;
@@ -482,12 +519,12 @@ strong {
 .form-headline {
   font-family: var(--font-serif);
   font-size: clamp(2rem, 5vw, 42px); /* Set to 42px maximum as requested */
-  margin-bottom: 3.5rem;
+  margin-bottom: 1.5rem;
   font-weight: 300;
 }
 
 .pure-form .form-row {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .pure-form label {
@@ -496,7 +533,7 @@ strong {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-text-muted);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .pure-form input, 
@@ -521,7 +558,7 @@ strong {
 }
 
 .pure-form textarea {
-  min-height: 140px;
+  min-height: 80px;
   resize: none;
 }
 
@@ -548,8 +585,8 @@ strong {
    FOOTER
    ========================================================================== */
 .footer-inline {
-  margin-top: 6rem;
-  padding-top: 2.5rem;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
   border-top: 1px solid rgba(232, 227, 218, 0.05);
 }
 
@@ -575,13 +612,10 @@ strong {
   letter-spacing: 0.06em;
 }
 
-/* ==========================================================================
-   ANIMATIONS
-   ========================================================================== */
+/* Simplified Static State */
 .reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1.2s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  opacity: 1;
+  transform: none;
 }
 
 .reveal.visible {

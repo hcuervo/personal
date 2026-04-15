@@ -20,7 +20,24 @@
       gtag('config', 'G-YVP7J36B8G');
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horacio Cuervo — Claridad estratégica</title>
+    <title>Horacio Cuervo — Estrategia y Claridad para Empresas en Crecimiento</title>
+    <meta name="description" content="Estrategia, tecnología y comunicación para dueños y directores de empresa. Recuperá claridad y decidí mejor para que tu negocio avance.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://horaciocuervo.com">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://horaciocuervo.com">
+    <meta property="og:title" content="Horacio Cuervo — Estrategia y Claridad para Empresas en Crecimiento">
+    <meta property="og:description" content="Estrategia, tecnología y comunicación para dueños y directores de empresa. Recuperá claridad y decidí mejor.">
+    <meta property="og:image" content="https://horaciocuervo.com/img/social-share.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://horaciocuervo.com">
+    <meta property="twitter:title" content="Horacio Cuervo — Estrategia y Claridad para Empresas en Crecimiento">
+    <meta property="twitter:description" content="Estrategia, tecnología y comunicación para dueños y directores de empresa. Recuperá claridad y decidí mejor.">
+    <meta property="twitter:image" content="https://horaciocuervo.com/img/social-share.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -1081,7 +1098,8 @@
                 </div>
 
                 <div class="contact-right">
-                    <form id="contact-form">
+                    <form id="contact-form" name="contacto" method="POST" data-netlify="true">
+                        <input type="hidden" name="form-name" value="contacto" />
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
@@ -1144,8 +1162,18 @@
         // Form submit
         document.getElementById('contact-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            this.style.display = 'none';
-            document.getElementById('form-success').style.display = 'block';
+            const myForm = e.target;
+            const formData = new FormData(myForm);
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString(),
+            })
+            .then(() => {
+                myForm.style.display = 'none';
+                document.getElementById('form-success').style.display = 'block';
+            })
+            .catch((error) => console.error(error));
         });
     </script>
 </body>

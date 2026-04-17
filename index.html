@@ -1114,8 +1114,9 @@
                 </div>
 
                 <div class="contact-right">
-                    <form id="contact-form" name="contacto" method="POST" data-netlify="true">
-                        <input type="hidden" name="form-name" value="contacto" />
+                    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="aba62cd6-cd6f-48d6-8502-794e293ac5af">
+                        <input type="hidden" name="subject" value="Nuevo contacto desde horaciocuervo.netlify.app">
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
@@ -1178,20 +1179,29 @@
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
         // Form submit
-        document.getElementById('contact-form').addEventListener('submit', function (e) {
+        document.getElementById('contact-form').addEventListener('submit', async function (e) {
             e.preventDefault();
-            const myForm = e.target;
-            const formData = new FormData(myForm);
-            fetch("/", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString(),
-            })
-            .then(() => {
-                myForm.style.display = 'none';
-                document.getElementById('form-success').style.display = 'block';
-            })
-            .catch((error) => console.error(error));
+            const form = e.target;
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: new FormData(form)
+                });
+                const data = await response.json();
+                if (data.success) {
+                    form.style.display = 'none';
+                    document.getElementById('form-success').style.display = 'block';
+                } else {
+                    throw new Error(data.message || 'Error al enviar');
+                }
+            } catch (err) {
+                alert('Hubo un error al enviar el formulario. Por favor intentá de nuevo.');
+                btn.disabled = false;
+                btn.textContent = 'Iniciar conversación';
+            }
         });
     </script>
 </body>

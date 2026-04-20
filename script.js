@@ -1,92 +1,51 @@
-/**
- * HORACIO CUERVO — SIMPLE NAVIGATION ENGINE
- * Clean vertical scroll with high-performance dot tracking.
- */
-
 document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.section-full');
-    const dots = document.querySelectorAll('.dot');
-    const navLinks = document.querySelectorAll('.nav-cta, .cta, .nav-brand, .dot');
-    const header = document.querySelector('.header');
-    
-    let currentIndex = 0;
-
-    // 1. NAVIGATION (Jump to Section)
-    function goToSection(index) {
-        if (index < 0 || index >= sections.length) return;
-        
-        sections[index].scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+    // Nav scroll
+    const nav = document.getElementById('main-nav');
+    if (nav) {
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 40);
         });
     }
 
-    // 2. SCROLL WATCHER (Simple Dot Update)
-    const observerOptions = {
-        root: null,
-        threshold: 0.2,
-        rootMargin: "-20%"
-    };
-
+    // Intersection observer for fade-up
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const index = Array.from(sections).indexOf(entry.target);
-                updateNavigationState(index);
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.12 });
 
-    sections.forEach(section => observer.observe(section));
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    function updateNavigationState(index) {
-        currentIndex = index;
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-        if (index > 0) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    }
-
-    // 3. KEYBOARD NAVIGATION
-    window.addEventListener('keydown', (e) => {
-        if (['ArrowDown', 'PageDown'].includes(e.key)) {
+    // Form submit
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            goToSection(currentIndex + 1);
-        } else if (['ArrowUp', 'PageUp'].includes(e.key)) {
-            e.preventDefault();
-            goToSection(currentIndex - 1);
-        }
-    });
-
-    // 4. CLICK HANDLERS
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href');
-            const dataIndex = link.getAttribute('data-index');
-
-            if (dataIndex !== null) {
-                e.preventDefault();
-                goToSection(parseInt(dataIndex));
-            } else if (href && href.startsWith('#')) {
-                const targetId = href.substring(1);
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    e.preventDefault();
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
+            const form = e.target;
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+            
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: new FormData(form)
+                });
+                const data = await response.json();
+                if (data.success) {
+                    form.style.display = 'none';
+                    document.getElementById('form-success').style.display = 'block';
+                } else {
+                    throw new Error(data.message || 'Error al enviar');
                 }
+            } catch (err) {
+                alert('Hubo un error al enviar el formulario. Por favor intentá de nuevo.');
+                btn.disabled = false;
+                btn.textContent = 'Iniciar conversación';
             }
-        });
-    });
-
-    // 5. FORM MOCK
-    const form = document.querySelector('#lead-form');
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            form.style.display = 'none';
-            document.querySelector('#form-success').style.display = 'block';
         });
     }
 });

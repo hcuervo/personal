@@ -48,8 +48,8 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 48px;
-    background: rgba(15, 13, 11, 0.92);
+    padding: 16px 48px;
+    background: rgba(15, 13, 11, 0.95);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid transparent;
     transition: border-color 0.3s;
@@ -88,14 +88,15 @@ nav.scrolled {
 
 /* ── HERO ── */
 #hero {
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
+    max-height: 750px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding-top: 80px;
 }
 
 .hero-left {
-    padding: 80px 48px 80px 48px;
+    padding: 60px 48px 80px 48px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -165,7 +166,7 @@ nav.scrolled {
     position: relative;
     overflow: hidden;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
 }
 
@@ -200,7 +201,7 @@ nav.scrolled {
 
 /* ── SECTIONS GENERAL ── */
 section {
-    padding: 96px 48px;
+    padding: 60px 48px 100px;
 }
 
 .section-inner {
@@ -445,7 +446,7 @@ h2 {
     width: 100%;
     aspect-ratio: 3/4;
     object-fit: cover;
-    object-position: top;
+    object-position: top center;
     display: block;
     opacity: 0.75;
     mix-blend-mode: luminosity;
@@ -776,49 +777,235 @@ footer {
 }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-    nav {
-        padding: 18px 24px;
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+    /* General */
+    body {
+        font-size: 16px;
     }
 
     section {
-        padding: 72px 24px;
+        padding: 56px 20px;
     }
 
+    h2 {
+        font-size: 28px;
+        line-height: 1.2;
+        margin-bottom: 20px;
+    }
+
+    /* Nav */
+    nav {
+        padding: 12px 20px;
+    }
+    
+    .nav-name {
+        font-size: 16px;
+    }
+
+    /* Hero */
     #hero {
         grid-template-columns: 1fr;
         min-height: auto;
+        max-height: none;
+        padding-top: 60px;
     }
 
     .hero-left {
-        padding: 96px 24px 64px;
+        padding: 40px 0 0;
+        text-align: left;
+    }
+
+    .hero-eyebrow {
+        font-size: 10px;
+        margin-bottom: 16px;
+    }
+
+    .hero-headline {
+        font-size: 34px;
+        line-height: 1.15;
+        margin-bottom: 20px;
+    }
+
+    .hero-sub {
+        font-size: 16px;
+        margin-bottom: 28px;
+        max-width: 100%;
+    }
+
+    .hero-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .btn-primary {
+        width: 100%;
+        text-align: center;
+        padding: 18px 24px;
+    }
+
+    .hero-note {
+        margin-top: 0;
+        font-size: 12px;
     }
 
     .hero-right {
-        height: 340px;
+        height: 300px;
+        margin-top: 40px;
+        padding: 0;
     }
 
-    .hero-photo-initials {
-        font-size: 80px;
+    .hero-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        opacity: 0.8;
     }
 
-    .qh-layout,
-    .ctx-layout,
-    .contact-layout {
+    /* El Problema */
+    .rec-intro {
+        font-size: 18px;
+        margin-bottom: 32px;
+    }
+
+    .rec-grid {
+        background: transparent;
+        display: block;
+    }
+
+    .rec-item {
+        padding: 24px 0;
+        border-left: none;
+        border-bottom: 1px solid var(--rule);
+        background: transparent !important;
+    }
+
+    .rec-item:last-child {
+        border-bottom: none;
+    }
+
+    .rec-number {
+        font-size: 28px;
+        margin-bottom: 8px;
+        opacity: 0.6;
+    }
+
+    .rec-text {
+        font-size: 15px;
+    }
+
+    .rec-image {
+        display: none !important;
+    }
+
+    /* Cómo Trabajo */
+    .qh-layout {
         grid-template-columns: 1fr;
-        gap: 48px;
+        gap: 40px;
+    }
+
+    .qh-left h2 {
+        font-size: 26px;
+    }
+
+    .qh-left p {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .qh-mechanics {
+        padding: 24px;
+    }
+
+    .qh-mechanic-item {
+        gap: 12px;
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+    }
+
+    .qh-mechanic-text strong {
+        font-size: 14px;
+    }
+
+    .qh-mechanic-text span {
+        font-size: 13px;
+    }
+
+    /* Trayectoria */
+    .ctx-layout {
+        grid-template-columns: 1fr;
+        gap: 0;
     }
 
     .ctx-photo-wrap {
-        position: static;
+        display: none;
     }
 
-    .ctx-photo-placeholder {
-        aspect-ratio: 4/3;
+    .ctx-content h2 {
+        font-size: 24px;
+        margin-bottom: 16px;
     }
 
-    .test-grid {
-        grid-template-columns: 1fr;
+    .ctx-content p {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .ctx-tags {
+        margin-top: 24px;
+        gap: 6px;
+    }
+
+    .ctx-tag {
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+
+    /* Contacto */
+    .contact-layout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contact-left {
+        order: 1;
+        margin-bottom: 32px;
+    }
+
+    .contact-right {
+        order: 2;
+    }
+
+    .contact-left p {
+        display: none; /* Hide long paragraphs on mobile to prioritize the form */
+    }
+
+    .contact-left .section-label, 
+    .contact-left h2 {
+        display: block; /* Keep the headline */
+    }
+
+    .contact-promise {
+        margin-top: 24px;
+        padding: 16px;
+        order: 3; /* Move promise below the form */
+    }
+
+    input, textarea {
+        font-size: 16px;
+        padding: 14px 0;
+    }
+
+    .btn-submit {
+        padding: 20px;
+        font-size: 14px;
+    }
+
+    /* Footer */
+    footer {
+        padding: 32px 20px;
     }
 
     .footer-link {
@@ -827,7 +1014,27 @@ footer {
         text-align: center;
     }
 
-    footer {
-        padding: 24px;
+    .footer-tagline {
+        font-size: 11px;
+    }
+
+    /* Desactivar animaciones para performance en mobile */
+    .fade-up {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-headline {
+        font-size: 30px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
     }
 }

@@ -7,21 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Intersection observer for fade-up
-    const observerOptions = {
-        threshold: 0.12
-    };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                observer.unobserve(e.target);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
     // Analytics helper
     const trackEvent = (eventName, eventParams = {}) => {

@@ -777,6 +777,7 @@ footer {
     letter-spacing: 0.05em;
     color: var(--cream);
     border-radius: 4px;
+    white-space: nowrap;
 }
 
 .metodo-arrow {

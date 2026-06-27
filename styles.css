@@ -710,6 +710,161 @@ footer {
     letter-spacing: 0.06em;
 }
 
+/* ── NUEVAS SECCIONES LANDING CONVERSION ── */
+
+/* DIAGNOSTICO */
+#diagnostico {
+    background: var(--bg);
+}
+
+.diag-intro {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 600px;
+    margin-bottom: 48px;
+}
+
+.diag-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.diag-item {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    padding: 32px 24px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--amber-light);
+    transition: background 0.3s;
+}
+
+.diag-item:hover {
+    background: var(--bg-3);
+    border-color: var(--amber);
+}
+
+/* METODO */
+#metodo {
+    background: var(--bg-2);
+}
+
+.metodo-intro {
+    font-size: 17px;
+    color: var(--text);
+    margin: 0 auto 64px auto;
+    max-width: 600px;
+}
+
+.metodo-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.metodo-step {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    padding: 16px 24px;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    border-radius: 4px;
+}
+
+.metodo-arrow {
+    color: var(--amber);
+    font-size: 24px;
+    font-family: var(--font-display);
+}
+
+/* SERVICIOS / ACTIVOS */
+#que-hago {
+    background: var(--bg);
+}
+
+.srv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.srv-card {
+    background: var(--bg-2);
+    border-top: 3px solid var(--amber);
+    padding: 40px 32px;
+}
+
+.srv-card h3 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--cream);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.srv-card p {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* AUTORIDAD (Contexto update) */
+.ctx-bullets {
+    list-style: none;
+    margin-top: 24px;
+}
+
+.ctx-bullets li {
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: var(--text);
+    position: relative;
+    padding-left: 24px;
+}
+
+.ctx-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+    font-family: var(--font-display);
+}
+
+.ctx-bullets strong {
+    color: var(--cream);
+    font-weight: 500;
+}
+
+/* TENSION */
+#tension {
+    background: var(--amber-pale);
+    padding: 80px 48px;
+}
+
+.tension-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 32px;
+}
+
+.tension-card {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.4;
+    border-left: 2px solid var(--amber);
+    padding-left: 24px;
+}
+
 /* ── ANIMATIONS ── */
 /* Simplificadas para evitar el efecto artificial de IA */
 

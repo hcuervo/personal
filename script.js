@@ -29,6 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             const form = e.target;
+            if (form.dataset.submitting === "true" || !form.reportValidity()) return;
+            const errorMsg = document.getElementById("form-error");
+            errorMsg.hidden = true;
+            errorMsg.textContent = "";
             const btn = form.querySelector('button[type="submit"]');
             
             // Honeypot check
@@ -44,12 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Basic UI feedback
             const originalText = btn.textContent;
+            form.dataset.submitting = "true";
+            form.setAttribute("aria-busy", "true");
             btn.disabled = true;
             btn.textContent = 'Enviando...';
 
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 15000);
             try {
                 const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
+                    signal: controller.signal,
                     body: new FormData(form),
                     headers: {
                         'Accept': 'application/json'
@@ -57,15 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const data = await response.json();
 
-                if (data.success) {
+                if (response.ok && data.success === true) {
                     trackEvent('form_submit_success', {
                         form_id: 'contact-form'
                     });
-                    form.style.display = 'none';
+                    form.hidden = true;
                     const successMsg = document.getElementById('form-success');
                     if (successMsg) {
-                        successMsg.style.display = 'block';
-                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        successMsg.hidden = false;
+                        successMsg.focus({ preventScroll: true });
+                        successMsg.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
                     }
                 } else {
                     throw new Error(data.message || 'Error al enviar');
@@ -73,9 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (err) {
                 trackEvent('form_submit_error', {
                     form_id: 'contact-form',
-                    error_message: err.message
+                    error_type: err.name === 'AbortError' ? 'timeout' : 'submission_failed'
                 });
-                alert('Hubo un error al enviar el formulario. Por favor intentá de nuevo.');
+                errorMsg.textContent = err.name === 'AbortError'
+                    ? 'El envío tardó más de lo esperado y no pudimos confirmar la recepción. Tus datos siguen en el formulario. Podés reintentar o contactarme por LinkedIn al pie de la página.'
+                    : 'No pudimos confirmar el envío. Tus datos siguen en el formulario. Intentá de nuevo o contactame por LinkedIn al pie de la página.';
+                errorMsg.hidden = false;
+                errorMsg.focus();
+            } finally {
+                clearTimeout(timeout);
+                delete form.dataset.submitting;
+                form.removeAttribute('aria-busy');
                 btn.disabled = false;
                 btn.textContent = originalText;
             }

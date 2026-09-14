@@ -35,7 +35,7 @@ body {
     font-weight: 300;
     font-size: 17px;
     line-height: 1.7;
-    overflow-x: hidden;
+    overflow-wrap: anywhere;
 }
 
 /* ── NAV ── */
@@ -89,10 +89,13 @@ nav.scrolled {
 /* ── HERO ── */
 #hero {
     min-height: calc(100vh - 80px);
-    max-height: 750px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 60px;
 }
 
 .hero-left {
@@ -263,7 +266,7 @@ h2 {
 
 .rec-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: 1px;
     background: var(--rule);
 }
@@ -570,7 +573,7 @@ label {
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink-faint);
+    color: var(--text);
     margin-bottom: 10px;
 }
 
@@ -653,7 +656,6 @@ textarea {
 }
 
 .form-success {
-    display: none;
     text-align: center;
     padding: 48px 24px;
 }
@@ -727,7 +729,7 @@ footer {
 
 .diag-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
     gap: 16px;
 }
 
@@ -793,7 +795,7 @@ footer {
 
 .srv-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: 24px;
 }
 
@@ -1113,7 +1115,7 @@ footer {
     }
 
     .contact-left p {
-        display: none; /* Hide long paragraphs on mobile to prioritize the form */
+        display: block;
     }
 
     .contact-left .section-label, 
@@ -1165,4 +1167,33 @@ footer {
         animation: none !important;
         transition: none !important;
     }
+}
+
+/* Content sizing and consultation flow */
+[hidden] { display: none !important; }
+section { scroll-margin-top: 64px; }
+.hero-content { max-width: 800px; min-width: 0; }
+.hero-sub { max-width: 640px; margin: 0 auto 32px; }
+.hero-actions { display: flex; gap: 24px; align-items: center; justify-content: center; flex-wrap: wrap; }
+.hero-note { margin-top: 28px; font-size: 15px; color: var(--text); }
+.btn-primary { max-width: 100%; }
+.contact-layout > *, .ctx-layout > * { min-width: 0; }
+.contact-right { width: 100%; }
+.engagement-steps { list-style-position: inside; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; text-align: left; }
+.engagement-steps li { padding: 24px; background: var(--bg-card); }
+.engagement-steps h3 { display: inline; font-size: 18px; color: var(--cream); }
+.engagement-steps p { margin-top: 12px; font-size: 16px; }
+.srv-card p + p { margin-top: 16px; }
+.form-error { color: var(--cream); padding: 16px; border-left: 3px solid var(--amber); margin-bottom: 16px; }
+.btn-submit:disabled { opacity: 0.7; cursor: wait; }
+textarea { resize: vertical; min-height: 100px; }
+@media (max-width: 768px) {
+    #hero { padding-top: 88px; }
+    .contact-layout { gap: 24px; }
+    .contact-left { margin-bottom: 0; }
+    .engagement-steps { grid-template-columns: 1fr; }
+    .srv-card { padding: 28px 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
 }
